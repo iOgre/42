@@ -2,11 +2,35 @@ import React, {Component} from 'react'
 import CommentList from "./CommentList";
 
 class Article extends Component {
-  
-  state = {
-  isOpen: false
+  constructor(props) {
+      super(props)
+	  this.state = {
+		  isOpen: props.defaultOpen
+	  }
   }
-  
+
+  componentWillMount() {
+  	 console.log('mounting ....')
+  }
+
+  componentDidMount() {
+
+  }
+
+  componentWillUpdate() {
+  	console.log('---', ' will update ');
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+  	return this.state.isOpen !== nextState.isOpen
+  }
+  componentWillReceiveProps(nextProps) {
+  	console.log('---', 'will receive props');
+  	if(nextProps.defaultOpen !== this.props.defaultOpen) {
+  		this.setState({
+		    isOpen: nextProps.defaultOpen
+	    })
+    }
+  }
   handleClick =()=> {
     this.setState({
       isOpen : !this.state.isOpen
